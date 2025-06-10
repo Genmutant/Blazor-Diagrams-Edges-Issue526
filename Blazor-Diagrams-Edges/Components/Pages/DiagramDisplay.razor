@@ -1,0 +1,71 @@
+﻿@using Blazor.Diagrams
+@using Blazor.Diagrams.Core.PathGenerators
+@using Blazor.Diagrams.Core.Routers
+@using Blazor.Diagrams.Options
+@using Blazor.Diagrams.Components
+@using Blazor.Diagrams.Core.Models
+@using Graphs
+
+<MudCard Class="mt-4" Style="height: 100%; width: 100%" >
+    <MudCardContent>
+        <div class="diagram-container">
+            <CascadingValue Value="Diagram" IsFixed="true">
+                <DiagramCanvas></DiagramCanvas>
+            </CascadingValue>
+        </div>
+    </MudCardContent>
+</MudCard>
+
+@code {
+    private BlazorDiagram Diagram { get; set; } = null!;
+
+    [Parameter] public InternalGraph Graph { get; set; } = null!;
+    
+    [Inject] public ILogger<DiagramDisplay> Logger { get; set; } = null!;
+
+    protected override void OnInitialized()
+    {
+        var options = new BlazorDiagramOptions
+        {
+            Links =
+            {
+                DefaultRouter = new NormalRouter(),
+                DefaultPathGenerator = new StraightPathGenerator()
+            },
+        };
+        Diagram = new BlazorDiagram(options);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        DrawWorkflow(Graph);
+    }
+
+    private void DrawWorkflow(InternalGraph graph)
+    {
+        var nodeModels = new Dictionary<string, NodeModel>();
+        Diagram.SuspendRefresh = true;
+        foreach (var node in graph.Nodes)
+        {
+            var stepNode = Diagram.Nodes.Add(new NodeModel {
+                Title = node.NodeId,
+                Size = node.Size,
+                Position = node.Position,
+            });
+            nodeModels[node.NodeId] = stepNode;
+        }
+        foreach (var edge in graph.Edges)
+        {
+            var sourceNode = nodeModels[edge.Source];
+            var targetNode = nodeModels[edge.Target];
+            var link = new LinkModel(sourceNode, targetNode){
+                TargetMarker = LinkMarker.Arrow,
+            };
+            Diagram.Links.Add(link);
+        }
+        Diagram.SuspendRefresh = false;
+        Diagram.Refresh();
+    }
+
+}

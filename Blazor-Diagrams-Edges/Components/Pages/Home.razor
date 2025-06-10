@@ -1,0 +1,25 @@
+﻿@page "/"
+@using Graphs
+
+<PageTitle>Home</PageTitle>
+
+<MudButton OnClick="_ => OpenDiagram()">Open Diagram</MudButton>
+
+@code {
+    
+    [Inject] IDialogService DialogService { get; set; } = null!;
+    
+    private async Task OpenDiagram()
+    {
+        var parameters = new DialogParameters<DiagramDisplayDialog>
+        {
+            { x => x.Graph, GraphBuilder.BuildGraph() }
+        };
+        var options = new DialogOptions
+        {
+            MaxWidth = MaxWidth.ExtraLarge
+        };
+        await DialogService.ShowAsync<DiagramDisplayDialog>("My Diagram", parameters, options);
+    }
+}
+

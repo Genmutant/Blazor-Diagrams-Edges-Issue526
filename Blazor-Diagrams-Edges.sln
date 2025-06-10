@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor-Diagrams-Edges", "Blazor-Diagrams-Edges\Blazor-Diagrams-Edges.csproj", "{1C8A0647-987E-43FF-9EF5-2D9FC26A1061}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1C8A0647-987E-43FF-9EF5-2D9FC26A1061}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C8A0647-987E-43FF-9EF5-2D9FC26A1061}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C8A0647-987E-43FF-9EF5-2D9FC26A1061}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C8A0647-987E-43FF-9EF5-2D9FC26A1061}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
